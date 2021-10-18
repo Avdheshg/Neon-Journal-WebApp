@@ -1,0 +1,45 @@
+<%- include('header'); -%>
+
+<body class="new-page">
+
+    <article class="notebook">
+
+        <form class="notebook-form" action="/new" method="post" onsubmit="changeImg()">
+            <!-- Tag -->
+            <div class="journal-tags">
+                <label>Tag</label>
+                <select name="tagValue" id="tag">
+                    <option value="Wisdom">Wisdom</option>
+                    <option value="AIM">AIM</option>
+                    <option value="Web Dev">Web Dev</option>
+                    <option value="Mood">Mood</option>
+                </select>
+            </div>
+
+            <!-- Title -->
+            <div class="title">
+                <label for="title">Title</label>
+                <input class="title-ip" type="text" id="title" name="title" placeholder="Enter Title">
+
+            </div>
+
+            <div class="page">
+                <textarea class="write-page" name="page" id="page"></textarea>
+            </div>
+
+            <button class="submit-btn" type="submit">Save</button>
+        </form>
+<!-- 
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem nostrum dolor similique iure ut facere libero odit est provident qui sit architecto, labore voluptate in totam nam voluptatem non iste. 
+    -->
+
+    </article>
+
+
+
+</body>
+
+    <script src="../randomImg.js"></script>
+
+
+</html>

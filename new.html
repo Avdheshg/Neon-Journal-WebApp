@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome  -->
+    <script src="https://kit.fontawesome.com/f451022f5b.js" crossorigin="anonymous"></script>
+
+    <title>New Journal</title>
+</head>
+
+<body class="new-page">
+
+    <article class="notebook">
+
+        <form class="notebook-form" action="/" method="post">
+            <!-- Tag -->
+            <div class="journal-tags">
+                <label>Tag</label>
+                <select id="tag">
+                    <option value="10">Wisdom</option>
+                    <option value="12">AIM</option>
+                    <option value="8">Web Dev</option>
+                    <option value="9">Mood</option>
+                </select>
+            </div>
+
+            <!-- Title -->
+            <div class="title">
+                <label for="title">Title</label>
+                <input class="title-ip" type="text" id="title" name="title" placeholder="Enter Title">
+
+            </div>
+
+            <div class="page">
+                <textarea class="write-page" name="page" id="page"></textarea>
+            </div>
+
+            <button class="submit-btn" type="submit">Save</button>
+        </form>
+
+
+
+    </article>
+
+
+
+</body>
+
+</html>
