@@ -1,5 +1,3 @@
-
-
 <!-- Imported the header module -->
 <%- include('header'); -%>
 
@@ -7,97 +5,55 @@
 
     <!-- Navigation -->
     <article class="nav">
-        <!-- Main Nav -->
-        <article class="main-nav">
-            <input type="checkbox" id="active">
-            <label for="active" class="menu-btn"><span></span></label>
-            <label for="active" class="close"></label>
-            <div class="wrapper">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Feedback</a></li>
-                </ul>
-            </div>
-        </article>
+        
 
         <!-- Logo -->
+        
         <article class="logo neonText">
-            <h1><a href="/">NEON</a></h1>
+            <h1><a href="/home" >NEON</a></h1>
         </article>
+    </article>
+
+    <!-- =========  Filter    ============== -->
+    <article class="filter">
+        <p>Filters: </p>
+        <a  class="btn btn-one" href="#">All</a>
+        <a  class="btn btn-one" href="/wisdom">Wisdom</a>
+        <a  class="btn btn-one" href="/Web">Web</a>
+        <a  class="btn btn-one" href="/Problems">Problems</a>
+        <a  class="btn btn-one" href="/books">Books</a>
 
     </article>
 
     <main class="main">
 
         <!-- Defining a template for adding new Journals -->
-        <% for (let i = 0; i < noteBookHTML.length; i++) {   %>
+        
+        <% for (let i = noteBookHTML.length-1; i >= 0 ; i--) {   %>
 
-            <section class="card">
+            <section class="card" id="card">
 
-                <p class="tag">  <%= noteBookHTML[i].journalTags %>   </p>
+                <form class="delete-journal" action="/delete" method="post">
+                    <p class="tag">  <%= noteBookHTML[i].tag %>   </p>
+                    <button class="delete-btn" type="submit" name="delete" value="<%= noteBookHTML[i].id %>"   onClick="makeRed()">&#10006;</button>
+                </form>
+   
                 <h1>   <%= noteBookHTML[i].title %>   </h1>
                 <p>   
                     <%= noteBookHTML[i].textArea.substring(0, 100) + " ..." %> 
-                    <a  class="read-more" href="/ <%= noteBookHTML[i].title %> ">Read More</a>
+                    <a  class="read-more" href="/added/<%= noteBookHTML[i].title %> ">Read More</a>
                 </p>
     
                 <section class="day-time">
                     <i class="fa-solid fa-clock"></i>
-                    <%= noteBookHTML[i].time %>   
+                    <%= noteBookHTML[i].date %>   
                 </section>
 
             </section>
 
         <%  }  %>
 
-        <section class="card">
-            <p class="tag">first</p>
-            <h1>IPL is day after tomorrow</h1>
-            <p>Deposit $100 and get $100 free</p>
-
-            <section class="day-time">
-                <i class="fa-solid fa-clock"></i>
-                Day Time
-            </section>
-        </section>
-
-        <section class="card">
-            <p class="tag">Tag</p>
-            <h1>Get 100% bonus welcome bonus</h1>
-            <p>Deposit $100 and get $100 free</p>
-
-            <section class="day-time">
-                <i class="fa-solid fa-clock"></i>
-                Day Time
-            </section>
-        </section>
-
-        <section class="card">
-            <p class="tag">Tag</p>
-            <h1>Get 100% bonus welcome bonus</h1>
-            <p>Deposit $100 and get $100 free</p>
-
-            <section class="day-time">
-                <i class="fa-solid fa-clock"></i>
-                Day Time
-            </section>
-        </section>
-
-        <section class="card">
-            <p class="tag">Tag</p>
-            <h1>Get 100% bonus welcome bonus</h1>
-            <p>Deposit $100 and get $100 free</p>
-
-            <section class="day-time">
-                <i class="fa-solid fa-clock"></i>
-                Day Time
-            </section>
-        </section>
-
-        <!-- Add Button -->
+        <!-- =============== Add Button ===============  -->
         <div class="new-notes">
             <a href="/new"><i class="fas fa-plus"></i></a>
         </div>
@@ -123,11 +79,6 @@
 
 <%- include('footer'); -%>
 
-<!--
-     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci blanditiis nostrum, beatae dolores veniam fuga architecto, accusantium nesciunt doloribus eaque ad, hic eos harum optio cumque odio. Quis, nemo. Recusandae. 
--->
-
-
 <!-- 
     Features
         Signup
@@ -142,7 +93,25 @@
 
  -->
 
+ <!-- active tag is not working -->
 
+
+ <!-- <script>
+    var buttons = document.querySelectorAll('.btn');
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // console.log(buttons);
+            toggleClass(buttons, this);
+        });
+    });
+
+    function toggleClass(buttons, buttonToActivate) {
+    buttons.forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+        buttonToActivate.classList.add('active');
+    } 
+</script>  -->
 
 
 

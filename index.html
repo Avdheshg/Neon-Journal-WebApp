@@ -24,6 +24,10 @@
 
 <body>
 
+    <!-- Home Button -->
+    <a href="/" class="home-btn">Home</a>
+
+
     <!-- Navigation -->
     <article class="nav">
         <!-- Main Nav -->
@@ -44,15 +48,47 @@
 
         <!-- Logo -->
         <article class="logo neonText">
-            <h1><a href="#">NEON</a></h1>
+            <h1><a href="#"  onClick="makeRed()">NEON</a></h1>
         </article>
 
     </article>
 
+    <!-- =========  Filter    ============== -->
+    <article class="filter">
+        <form action="#" method="post">
+            <!-- <button class="btn btn-one" type="submit" name="" value="">All</button> -->
+            <button class="btn btn-one" type="button" name="" value="">All</button>
+        </form>
+
+        <form action="" method="post">
+            <!-- <button   class="btn btn-two"  type="submit" name="" value="">Wisdom</button> -->
+            <button class="btn btn-one" name="" value="">Wisodm</button>
+        </form>
+
+        <form action="" method="post">
+            <button  class="btn btn-three"  type="submit" name="" value="">AIM</button>
+        </form>
+
+        <form action="" method="post">
+            <button  class="btn btn-four"  type="submit" name="" value="">Web Dev</button>
+        </form>
+
+        <form action="" method="post">
+            <button  class="btn btn-five"  type="submit" name="" value="">Mood</button>
+        </form>
+    </article>
+
+    <!-- ============= Make the active button active and apply the filter functionality =========================== -->
+
     <main class="main">
 
-        <section class="card">
-            <p class="tag">first</p>
+        <section class="card" id="card">
+
+            <form class="delete-journal" action="/" method="post">
+                <p class="tag">first</p>
+                <button class="delete-btn" type="submit" name="delete" value="">&#10006;</button>
+            </form>
+            
             <h1>IPL is day after tomorrow</h1>
             <p>
                 Deposit $100 and get $100 free
@@ -120,6 +156,9 @@
 
 </body>
 
+    <script src="script.js"></script>
+    
+
 </html>
 
 
@@ -137,6 +176,8 @@
             like grid or one by one
 
  -->
+
+
 
 
 
