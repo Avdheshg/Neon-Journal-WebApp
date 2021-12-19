@@ -7,6 +7,21 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require('lodash');
 
+const app = express();
+
+// Importing the time module
+const dayTimeModule = require(__dirname + "/dayTime.js");
+
+// Use body-parser
+app.use(bodyParser.urlencoded({extended: true}));
+
+// Using CSS
+app.use(express.static("public"));
+
+// Using EJS
+app.set('view engine', 'ejs');
+
+
 // --------     Mongoose    --------
 // Connecting
 mongoose.connect("mongodb://localhost:27017/JournalDB");
@@ -33,20 +48,6 @@ const Journal = mongoose.model("Journal", JournalDBSchema);
 // let unique = _.lowerCase("hElLO uRl");
 // let unique = _.lowerCase("heeloBAr");
 // console.log(unique);
-
-const app = express();
-
-// Importing the time module
-const dayTimeModule = require(__dirname + "/dayTime.js");
-
-// Use body-parser
-app.use(bodyParser.urlencoded({extended: true}));
-
-// Using CSS
-app.use(express.static("public"));
-
-// Using EJS
-app.set('view engine', 'ejs');
 
 // Main array for storing all Journals
 // const j1Tag = "Wisdom";
@@ -98,115 +99,113 @@ app.set('view engine', 'ejs');
 //     date: j1DayTime
 // });
 
-let filterActive = false;
-let activeTag = "All";
+// let filterActive = false;
+// let activeTag = "All";
+var isFilterEmpty = false;
 
 // Set up Route for the Home page
 app.get("/", function(req, res) {
 
-    if (!filterActive) {
-        Journal.find({}, (err, foundItems) => {
-            if (foundItems.length == 0) {
-                // defaultJournal.save();
-                res.send("<p>No Journal left")
-            } else {
-                res.render('index', {noteBookHTML: foundItems});
-            }
-        });
-    } else {
-        filterActive = false;
-        // console.log("Active tag : " + activeTag);
-        Journal.find({tag: activeTag}, function(err, journals) {
-            res.render('post', {noteBookHTML: journals});
-        });
-    }
-});
-
-// For delete btn
-app.post("/delete", function(req, res) {
-    
-    const deleteBtn = req.body.delete;
-    // console.log(deleteBtn);
-
-    Journal.deleteOne({_id: deleteBtn}, function(err) {
-        if (!err) {
-            console.log("Deleted");
+    Journal.find({}, (err, foundItems) => {
+        if (foundItems.length == 0) { 
+            // defaultJournal.save();
+            res.send("<p>No Journal left");
+        } else {
+            res.render('index', {noteBookHTML: foundItems, isFilterEmptyHTML: isFilterEmpty});
         }
     });
-
-    res.redirect("/");
 });
+
 
 // --- For Edit functionality ------
 let id = undefined;
 // const toUpdateJournal = [];
-let arr = [];
+let toEditArr = ["", "", ""];
 
 // Setting route for new.ejs
 app.get("/new", function(req, res) {
-    
-    if (id !== undefined) {
+    console.log("In get() " );
 
-        console.log("In new get() Array is ");
-        // console.log(toUpdateJournal);
-        console.log(arr);
-    } else {
-
-        console.log("What");
-    }
-
-    res.render('new', {foo: 'FOO'});
-
-    // res.redirect("/");
+    res.render("new", {toEditArrHTML: toEditArr});
 });
+
 
 // let title = "";
 app.post("/new", function(req, res) {
     
-    const dayTime = dayTimeModule.date();
+    const dayTime = dayTimeModule.date(); 
     
-    id = req.body.toEdit;
-    console.log("After  ID " + id);
+    id = req.body.toEditID;
+    // const myText = req.body.title;
+    // console.log("upper Textarea " + myText);
+    // console.log("to edit ID " + id);
     
+    // added page(or Edit) has sent the ID, after user have clicked the edit btn
     if (id !== undefined) {
         
-        // Not able to put in the array
-        Journal.findOne({_id: id}, function(err, journal) {
-            console.log("Journal found\n" + journal._id);
-            // console.log(journal.title);
-            console.log("1");
+        console.log("Here from edit and the ID is " + id);
+        
+        Journal.findOne({_id: id}, function(err, journalFound) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Journal found => " + journalFound.title);                
+                toEditArr[0] = journalFound.title;  
+                toEditArr[1] = journalFound.textArea;
+                toEditArr[2] = journalFound.date;
 
-            // toUpdateJournal.push(journal._id, journal.tag, journal.title, journal.textArea);
-            // toUpdateJournal.push(journal._id);
-            const uID = journal._id;
-            console.log(uID);
-            arr.push(uID);
-            arr.push("hello array");
+                console.log(toEditArr);
+                res.redirect("/new"); 
+            }
+        });
+    } else {
+        console.log("array is reinitialised ");
+        toEditArr = ["", "", ""];
 
-            // console.log(toUpdateJournal);
+        // update functionality
+        /*  
+            call for findOneAndUpdate
+                if anything matches then update it
+            else 
+                save it as a new item
+            
+        */
+        
+        const lodashTitle = _.trim(req.body.title);
+
+        const updatedTextArea = req.body.page;
+        console.log("textArea " + updatedTextArea);
+
+        Journal.findOneAndRemove({title: lodashTitle}, function(err) {
+            if (err) {
+                console.log(err); 
+            } else {
+                console.log("Item deleted successfully");
+            } 
         });
 
-        console.log("2 ");
+        // let foundJournal;
+        // Journal.findOne({title: lodashTitle}, (err, foundItem) => {
+        //     console.log("Found item with title " + lodashTitle);
+        //     console.log(foundItem);
+        //     foundJournal = foundItem;
+        // });
+        // console.log("foundJournal " + foundJournal);
 
+        const journal = new Journal({
+            tag: req.body.tagValue,
+            title: lodashTitle,
+            textArea: req.body.page,
+            date: dayTime
+        }); 
+    
+        journal.save();
+        
+        res.redirect("/");
+        
     }
     
-    if (id !== undefined) {
-        console.log("3 ");
-        res.redirect("/new");
-    }
     
-    const lodashTitle = _.trim(req.body.title);
-
-    const journal = new Journal({
-        tag: req.body.tagValue,
-        title: lodashTitle,
-        textArea: req.body.page,
-        date: dayTime
-    }); 
-
-    // journal.save();
-
-    // res.redirect("/");
 
 
 
@@ -227,33 +226,63 @@ app.post("/new", function(req, res) {
     // -----
 });
 
+
+// For delete btn
+app.post("/delete", function(req, res) {
+    
+    const deleteBtn = req.body.delete;
+    // console.log(deleteBtn);
+
+    Journal.deleteOne({_id: deleteBtn}, function(err) {
+        if (!err) {
+            console.log("Deleted");
+        }
+    });
+
+    res.redirect("/");
+});
+
+
+
 app.get("/demo", function(req, res) {
     res.send("<p> Hello there! ");
 });
 
-// Setting route parameter
-app.get("/:values", function(req, res) {
-    // console.log(req.params.values);
 
+// =============     route parameter           ==============================================
+// Setting route parameter for filter tags
+app.get("/:values", function(req, res) {
+    console.log(req.params.values);
+ 
     enteredVal = _.capitalize(req.params.values);
 
-    filterActive = true;
-    activeTag = enteredVal;
-    res.redirect("/");
+    // filterActive = true;
+    let activeTag = enteredVal;
+
+    Journal.find({tag: activeTag}, function(err, journals) {
+        if (journals.length === 0) {
+            // isFilterEmpty = true;
+            res.render('post', {noteBookHTML: journals});
+        } else {
+            res.render('post', {noteBookHTML: journals});
+        }
+    });
+    // res.redirect("/");
     
 });
 
+// Route params for "Read More" button
 app.get("/added/:title", function(req, res) {
     
     const titleEntered = _.trim(req.params.title);
     
-    // console.log("title =>" + req.params.title + ". ");
-    // console.log("titleEntered =>" + titleEntered + ". ");
+    console.log("title =>" + req.params.title + ". ");
+    console.log("titleEntered =>" + titleEntered + ". ");
 
     // Find the matched Journal from DB
     Journal.findOne({title: titleEntered}, function(err, journal) {
         console.log(journal);
-        console.log(journal.textArea);
+        // console.log(journal.textArea);
         res.render("added", {journalHTML: journal});
     });
 

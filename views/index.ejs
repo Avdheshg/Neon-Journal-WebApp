@@ -1,4 +1,4 @@
-<!-- Imported the header module -->
+<!-- Import the header module -->
 <%- include('header'); -%>
 
 <body>
@@ -10,14 +10,14 @@
         <!-- Logo -->
         
         <article class="logo neonText">
-            <h1><a href="/home" >NEON</a></h1>
+            <h1><a href="/" >NEON</a></h1>
         </article>
     </article>
 
     <!-- =========  Filter    ============== -->
     <article class="filter">
         <p>Filters: </p>
-        <a  class="btn btn-one" href="#">All</a>
+        <a  class="btn btn-one" href="/">All</a>
         <a  class="btn btn-one" href="/wisdom">Wisdom</a>
         <a  class="btn btn-one" href="/Web">Web</a>
         <a  class="btn btn-one" href="/Problems">Problems</a>
@@ -28,29 +28,33 @@
     <main class="main">
 
         <!-- Defining a template for adding new Journals -->
+        <% if (isFilterEmptyHTML) {   %>
+            <p class="filter-empty">No journal available of this kind</p>
+        <%  } else { %>
         
-        <% for (let i = noteBookHTML.length-1; i >= 0 ; i--) {   %>
+            <% for (let i = noteBookHTML.length-1; i >= 0 ; i--) {   %>
 
-            <section class="card" id="card">
+                <section class="card" id="card">
 
-                <form class="delete-journal" action="/delete" method="post">
-                    <p class="tag">  <%= noteBookHTML[i].tag %>   </p>
-                    <button class="delete-btn" type="submit" name="delete" value="<%= noteBookHTML[i].id %>"   onClick="makeRed()">&#10006;</button>
-                </form>
-   
-                <h1>   <%= noteBookHTML[i].title %>   </h1>
-                <p>   
-                    <%= noteBookHTML[i].textArea.substring(0, 100) + " ..." %> 
-                    <a  class="read-more" href="/added/<%= noteBookHTML[i].title %> ">Read More</a>
-                </p>
+                    <form class="delete-journal" action="/delete" method="post">
+                        <p class="tag">  <%= noteBookHTML[i].tag %>   </p>
+                        <button class="delete-btn" type="submit" name="delete" value="<%= noteBookHTML[i].id %>"   onClick="makeRed()">&#10006;</button>
+                    </form>
     
-                <section class="day-time">
-                    <i class="fa-solid fa-clock"></i>
-                    <%= noteBookHTML[i].date %>   
+                    <h1>   <%= noteBookHTML[i].title %>   </h1>
+                    <p>   
+                        <%= noteBookHTML[i].textArea.substring(0, 100) + " ..." %> 
+                        <a  class="read-more" href="/added/<%= noteBookHTML[i].title %> ">Read More</a>
+                    </p>
+        
+                    <section class="day-time">
+                        <i class="fa-solid fa-clock"></i>
+                        <%= noteBookHTML[i].date %>   
+                    </section>
+
                 </section>
 
-            </section>
-
+            <%  }  %>
         <%  }  %>
 
         <!-- =============== Add Button ===============  -->

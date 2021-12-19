@@ -14,14 +14,13 @@ body {
     min-height: 100vh;
 }
 
-
 /*  ------------ Footer ------------  */
 footer {
-    margin-top: auto;
-    padding: 2em;
+    padding: 3em 1em 1em 1em;
     /* background-color: #1a73e8; */
     width: 100%;
     text-align: center;
+    margin-top: auto;
 
 }
 
@@ -246,6 +245,7 @@ main {
 
 
 
+
 /* =========     Media QUeries       ============= */
 
 @media (max-width: 45em) {
@@ -271,7 +271,6 @@ main {
     
     position: fixed;
     left: 0px;
-    top: 4em;
 
 }
 
@@ -432,7 +431,7 @@ main {
 
 
 /* ================================================================
-                    added.ejs: Edit Btn
+                    added.ejs: Read More Btn
 ================================================================ */
 .added {
     width: 80%;
@@ -455,13 +454,7 @@ main {
 }
 
 
-/* ================================================================
-                    post.ejs: Read More Btn
-================================================================ */
-.no-journal {
-    color: #fff;
-    /* text-align: center; */
-}
+
 
 
 

@@ -28,19 +28,16 @@
     <article class="added">
         <div class="center">
 
-            <form action="/new" method="post">
+            <form action="/new" method="post">  
                 <h1> <%= journalHTML.title %> </h1>
                 <p> <%= journalHTML.textArea %>    </p>
-                <p> <%= journalHTML._id %>  </p>
-
-                <!-- <input type="text" value="<%= journalHTML.textArea %>">Hello</input> -->
-                <input type="text" name="toEdit" value="<%= journalHTML._id %>">
-                <button type="submit" name="submit" value="<%= journalHTML.textArea %>">Submit</button>
+                
+                <input type="hidden" name="toEditID" value="<%= journalHTML._id %>">
+                <button type="submit" class="submit-btn" name="submit" >Edit</button>
             </form>
 
         </div>
     </article>
-
 
 
 

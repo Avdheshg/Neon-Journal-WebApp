@@ -1,13 +1,13 @@
 
 
-<!-- Imported the header module -->
+<!-- Import the header module -->
 <%- include('header'); -%>
 
     <!-- Navigation -->
     <article class="nav">
         <!-- Logo -->
         <article class="logo neonText">
-            <h1><a href="/home" >NEON</a></h1>
+            <h1><a href="/" >NEON</a></h1>
         </article>
 
     </article>
@@ -25,35 +25,39 @@
     <main class="main">
         <!-- Defining a template for adding new Journals -->
         <% if (noteBookHTML.length == 0) {   %>
-            <p> No journals available </p>
+            <p class="no-journal"> No journals available for this filter. You can add new journal by using the Add button below</p>
         <% } else {        %>
-            <% for (let i = noteBookHTML.length-1; i >= 0 ; i--) {   %>
+            <% noteBookHTML.forEach(function(item) {    %>
 
                 <section class="card" id="card">
     
                     <form class="delete-journal" action="/delete" method="post">
-                        <p class="tag">  <%= noteBookHTML[i].tag %>   </p>
-                        <button class="delete-btn" type="submit" name="delete" value="<%= noteBookHTML[i].id %>"   onClick="makeRed()">&#10006;</button>
+                        <p class="tag">  <%= item.tag %>   </p>
+                        <button class="delete-btn" type="submit" name="delete" value="<%= item.id %>"   onClick="makeRed()">&#10006;</button>
                     </form>
        
-                    <h1>   <%= noteBookHTML[i].title %>   </h1>
+                    <h1>   <%= item.title %>   </h1>
                     <p>   
-                        <%= noteBookHTML[i].textArea.substring(0, 100) + " ..." %> 
-                        <a  class="read-more" href="/ <%= noteBookHTML[i].title %> ">Read More</a>
+                        <%= item.textArea.substring(0, 100) + " ..." %> 
+                        <a  class="read-more" href="/added/<%= item.title %> ">Read More</a>
                     </p>
         
                     <section class="day-time">
                         <i class="fa-solid fa-clock"></i>
-                        <%= noteBookHTML[i].date %>   
+                        <%= item.date %>   
                     </section>
     
                 </section>
     
-            <%  }  %>
+            <%  })  %>
         <% } %>
         
     </main>
 
+
+    <div class="new-notes">
+        <a href="/new"><i class="fas fa-plus"></i></a>
+    </div>
 
 
 

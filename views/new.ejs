@@ -11,25 +11,22 @@
             <!-- Tag -->
             <div class="journal-tags">
                 <label>Tag</label>
-                <select name="tagValue" id="tag">
+                <select name="tagValue" id="tag" >
                     <option value="Wisdom">Wisdom</option>
                     <option value="Web">Web</option>
                     <option value="Problems">Problems</option>
                     <option value="Books">Books</option>
                 </select>
             </div>
-
             <!-- Title -->
             <div class="title">
                 <label for="title">Title</label>
-                <input class="title-ip" type="text" id="title" name="title" placeholder="Enter Title">
+                <input class="title-ip" value="<%= toEditArrHTML[0] %>" type="text" id="title" name="title" placeholder="Enter Title">
 
             </div>
-
             <div class="page">
-                <textarea class="write-page" name="page" id="page"></textarea>
+                <textarea class="write-page" name="page" id="page"><%= toEditArrHTML[1] %> </textarea>
             </div>
-
             <button class="submit-btn" type="submit">Save</button>
         </form>
 <!-- 
@@ -42,7 +39,8 @@
 
 </body>
 
-    <script src="../randomImg.js"></script>
+
+    <!-- <script src="../randomImg.js"></script> -->
 
 
 </html>
